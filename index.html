@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz Aniversário, Pai!</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f5f5f5;
+            padding: 20px;
+            margin: 0;
+        }
+        .slideshow-container {
+            position: relative;
+            max-width: 100%;
+            display: none;
+        }
+        img {
+            width: 100%;
+            height: auto;
+            max-height: 500px;
+            border-radius: 10px;
+            display: none;
+        }
+        .show {
+            display: block;
+        }
+        .start-button {
+            background: #ffcc00;
+            padding: 15px 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #2c3e50;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .continue-button {
+            background: #ffcc00;
+            padding: 15px 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #2c3e50;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .continue-button.disabled {
+            background: #b2b2b2; /* Cor cinza quando desabilitado */
+            cursor: not-allowed;
+        }
+        .final-button {
+            background: #e74c3c; /* Vermelho */
+            padding: 15px 20px;
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .carta-piscando {
+            font-size: 30px;
+            font-weight: bold;
+            color: #ff6347;
+            animation: piscando 1s infinite;
+        }
+        .message {
+            font-size: 22px;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+        .volume-warning {
+            font-size: 22px;
+            font-weight: bold;
+            color: #ff6347;
+            margin-top: 20px;
+        }
+
+        @keyframes piscando {
+            0% { opacity: 0; }
+            50% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        @media (min-width: 768px) {
+            body {
+                max-width: 1000px;
+                margin: 0 auto;
+                padding: 40px;
+            }
+            .slideshow-container {
+                max-width: 900px;
+                margin: 0 auto;
+            }
+            img {
+                max-height: 600px;
+            }
+        }
+
+        @media (max-width: 767px) {
+            body {
+                padding: 20px;
+            }
+            .slideshow-container {
+                padding: 10px;
+            }
+            img {
+                max-height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Feliz Aniversário, Pai!</h1>
+    
+    <div class="carta-piscando">
+        <p>FAMILIA - Para o melhor PAI/VÔ do mundo!</p>
+    </div>
+    
+    <div class="volume-warning">
+        <p>Aumente o volume 🎶</p>
+    </div>
+
+    <button class="start-button" onclick="startSlideshow()">Clique aqui para começar 🎉</button>
+
+    <div class="slideshow-container">
+        <img src="https://imgur.com/FPZpHkU.jpg" class="show">
+        <img src="https://imgur.com/caV8SOB.jpg">
+        <img src="https://imgur.com/06bVGeL.jpg">
+        <img src="https://imgur.com/Ogc51WH.jpg">
+        <img src="https://imgur.com/XYkplZv.jpg">
+        <img src="https://imgur.com/9MMzfgb.jpg">
+    </div>
+
+    <audio id="audio1" src="audio/audio1.ogg" preload="auto"></audio>
+    <audio id="audio2" src="audio/audio2.ogg" preload="auto"></audio>
+    <audio id="audio3" src="audio/audio3.ogg" preload="auto"></audio>
+    <audio id="audio4" src="audio/audio4.ogg" preload="auto"></audio>
+    <audio id="audio5" src="audio/audio5.ogg" preload="auto"></audio>
+    <audio id="audio6" src="audio/audio6.ogg" preload="auto"></audio>
+
+    <script>
+        let imagens = document.querySelectorAll(".slideshow-container img");
+        let audios = [
+            document.getElementById("audio1"),
+            document.getElementById("audio2"),
+            document.getElementById("audio3"),
+            document.getElementById("audio4"),
+            document.getElementById("audio5"),
+            document.getElementById("audio6"),
+        ];
+        let index = 0;
+
+        function startSlideshow() {
+            document.querySelector(".carta-piscando").style.display = "none";
+            document.querySelector(".volume-warning").style.display = "none";
+            document.querySelector(".start-button").style.display = "none";
+            document.querySelector(".slideshow-container").style.display = "block";
+            showNextImage();
+        }
+
+        function showNextImage() {
+            if (index >= imagens.length) return;
+
+            imagens.forEach(img => img.classList.remove("show"));
+            imagens[index].classList.add("show");
+
+            let messages = [
+                "Parabéns, Pai! Que Deus te ilumine sempre. ❤️",
+                "Que a alegria e o amor estejam sempre presentes em sua vida!",
+                "Você é a razão de nossa felicidade! Te amamos!",
+                "Te desejamos muita saúde, paz e amor! 🥳",
+                "Cada momento com você é um presente. Feliz aniversário!",
+                "Pai, você é nosso exemplo, nossa força e nosso maior amor! Nos te amamos! ❤️"
+            ];
+
+            let messageDiv = document.createElement("div");
+            messageDiv.classList.add("message");
+            messageDiv.innerHTML = messages[index];
+            imagens[index].after(messageDiv);
+
+            if (audios[index]) {
+                audios[index].play().catch((error) => {
+                    console.error("Erro ao tentar tocar o áudio:", error);
+                });
+            }
+
+            let continueButton = document.createElement("button");
+            continueButton.classList.add("continue-button");
+            continueButton.innerText = "Próxima";
+            continueButton.classList.add("disabled");
+            continueButton.disabled = true; // Desabilitar o botão no início
+
+            // Esperar o áudio terminar para habilitar o botão
+            audios[index].onended = function() {
+                continueButton.classList.remove("disabled");
+                continueButton.disabled = false;
+            };
+
+            if (index === imagens.length - 1) {
+                // Botão final, sem necessidade de esperar pelo áudio
+                continueButton.classList.add("final-button");
+                continueButton.innerText = "Nos Te Amamos ❤️";
+                continueButton.onclick = function() {
+                    window.close();
+                };
+            } else {
+                continueButton.onclick = function() {
+                    index++;
+                    if (index < imagens.length) {
+                        messageDiv.remove();
+                        continueButton.remove();
+                        showNextImage();
+                    }
+                };
+            }
+
+            imagens[index].after(continueButton);
+        }
+    </script>
+
+</body>
+</html>
